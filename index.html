@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intro to Number Theory — Interactive</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="app">
+        <button id="sidebar-toggle" aria-label="Toggle sidebar">&#9776;</button>
+        <aside id="sidebar">
+            <div id="sidebar-header">
+                <h1>Intro to Number Theory</h1>
+                <p class="author">人教版 / Dudley / 竞赛教程</p>
+                <div id="progress-container">
+                    <div id="progress-bar"><div id="progress-fill"></div></div>
+                    <span id="progress-text">0%</span>
+                </div>
+            </div>
+            <div id="search-container">
+                <input type="text" id="search-input" placeholder="Search topics...">
+            </div>
+            <nav id="chapter-nav"></nav>
+            <div id="sidebar-footer"><p class="copyright-notice" style="font-size:0.7rem;color:#888;margin-top:12px;text-align:center;">&copy; 2026 Hengzhe Zhao &middot; AGPL-3.0 &amp; Commercial</p>
+                <button id="reset-progress">Reset Progress</button>
+            </div>
+        </aside>
+        <main id="main-content">
+            <div id="welcome-screen">
+                <div class="welcome-hero">
+                    <h1>Intro to Number Theory</h1>
+                    <h2>初等数论 · Interactive</h2>
+                    <p class="welcome-description">
+                        Discover the magic of whole numbers! From primes and factors to secret codes
+                        and mathematical puzzles. Every concept comes alive through interactive
+                        explorations and animated demonstrations.
+                    </p>
+                </div>
+                <div class="roadmap">
+                    <h3>What You'll Explore</h3>
+                    <div class="roadmap-parts">
+                        <div class="roadmap-part">
+                            <h4>Part A: Numbers &amp; Divisibility</h4>
+                            <ul>
+                                <li>Ch 0: The World of Whole Numbers</li>
+                                <li>Ch 1: Divisibility &amp; Factors</li>
+                                <li>Ch 2: Divisibility Rules</li>
+                            </ul>
+                        </div>
+                        <div class="roadmap-part">
+                            <h4>Part B: Primes</h4>
+                            <ul>
+                                <li>Ch 3: Prime Numbers</li>
+                                <li>Ch 4: The Sieve of Eratosthenes</li>
+                                <li>Ch 5: Prime Factorization</li>
+                            </ul>
+                        </div>
+                        <div class="roadmap-part">
+                            <h4>Part C: GCD &amp; LCM</h4>
+                            <ul>
+                                <li>Ch 6: Greatest Common Divisor</li>
+                                <li>Ch 7: The Euclidean Algorithm</li>
+                                <li>Ch 8: Least Common Multiple</li>
+                            </ul>
+                        </div>
+                        <div class="roadmap-part">
+                            <h4>Part D: Modular Arithmetic</h4>
+                            <ul>
+                                <li>Ch 9: Remainders &amp; Clock Math</li>
+                                <li>Ch 10: Modular Addition &amp; Multiplication</li>
+                                <li>Ch 11: Patterns in Remainders</li>
+                            </ul>
+                        </div>
+                        <div class="roadmap-part">
+                            <h4>Part E: Special Numbers</h4>
+                            <ul>
+                                <li>Ch 12: Perfect Numbers &amp; Amicable Pairs</li>
+                                <li>Ch 13: Fibonacci Numbers</li>
+                                <li>Ch 14: Pythagorean Triples</li>
+                            </ul>
+                        </div>
+                        <div class="roadmap-part">
+                            <h4>Part F: Fun Applications</h4>
+                            <ul>
+                                <li>Ch 15: Divisibility Puzzles &amp; Games</li>
+                                <li>Ch 16: Secret Codes &amp; Ciphers</li>
+                                <li>Ch 17: Number Theory in Everyday Life</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <p class="welcome-start">Select a chapter from the sidebar to begin your adventure with numbers!</p>
+            </div>
+            <div id="chapter-content" style="display:none;">
+                <div id="chapter-header">
+                    <div id="chapter-number-badge"></div>
+                    <h1 id="chapter-title"></h1>
+                    <p id="chapter-subtitle"></p>
+                </div>
+                <div id="section-tabs"></div>
+                <article id="section-content"></article>
+                <div id="exercises-panel" style="display:none;">
+                    <h3>Exercises</h3>
+                    <div id="exercises-list"></div>
+                </div>
+                <div id="chapter-nav-buttons">
+                    <button id="prev-btn" disabled>&larr; Previous</button>
+                    <span id="section-indicator"></span>
+                    <button id="next-btn">Next &rarr;</button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <script src="viz-engine.js"></script>
+
+    <script>
+    window.CHAPTER_MANIFEST = [
+        {number:0,  id:'ch00', title:'The World of Whole Numbers',                 file:'ch00-whole-numbers'},
+        {number:1,  id:'ch01', title:'Divisibility & Factors',                     file:'ch01-divisibility'},
+        {number:2,  id:'ch02', title:'Divisibility Rules',                         file:'ch02-divisibility-rules'},
+        {number:3,  id:'ch03', title:'Prime Numbers',                              file:'ch03-primes'},
+        {number:4,  id:'ch04', title:'The Sieve of Eratosthenes',                  file:'ch04-sieve'},
+        {number:5,  id:'ch05', title:'Prime Factorization',                        file:'ch05-factorization'},
+        {number:6,  id:'ch06', title:'Greatest Common Divisor',                    file:'ch06-gcd'},
+        {number:7,  id:'ch07', title:'The Euclidean Algorithm',                    file:'ch07-euclidean'},
+        {number:8,  id:'ch08', title:'Least Common Multiple',                      file:'ch08-lcm'},
+        {number:9,  id:'ch09', title:'Remainders & Clock Math',                    file:'ch09-remainders'},
+        {number:10, id:'ch10', title:'Modular Addition & Multiplication',          file:'ch10-modular-ops'},
+        {number:11, id:'ch11', title:'Patterns in Remainders',                     file:'ch11-remainder-patterns'},
+        {number:12, id:'ch12', title:'Perfect Numbers & Amicable Pairs',           file:'ch12-perfect-numbers'},
+        {number:13, id:'ch13', title:'Fibonacci Numbers',                          file:'ch13-fibonacci'},
+        {number:14, id:'ch14', title:'Pythagorean Triples',                        file:'ch14-pythagorean'},
+        {number:15, id:'ch15', title:'Divisibility Puzzles & Games',               file:'ch15-puzzles'},
+        {number:16, id:'ch16', title:'Secret Codes & Ciphers',                     file:'ch16-codes'},
+        {number:17, id:'ch17', title:'Number Theory in Everyday Life',             file:'ch17-everyday'},
+    ];
+    </script>
+
+    <script src="app.js"></script>
+</body>
+</html>
